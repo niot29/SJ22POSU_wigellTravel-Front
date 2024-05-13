@@ -7,8 +7,7 @@ import ImgeHotel from "./assets/images/pexels-pixabay.jpg";
 import { GiShoppingBag } from "react-icons/gi";
 import RatingStars from "./components/RatingStars";
 import ShoppingCart from "./components/ShoppingCart";
-
-
+import ProductDetails from "./components/ProductDetails";
 
 const products = [
 	{
@@ -68,6 +67,8 @@ const products = [
 ];
 
 function App() {
+	const [productDetailsVisibilty, setProductDetailsVisibilty] =
+		useState(false);
 	const [cartsVisibilty, setCartVisible] =
 		useState(false);
 	const [productsInCart, setProducts] =
@@ -93,6 +94,10 @@ function App() {
 			...productsInCart,
 			newProduct,
 		]);
+	};
+
+	const productDetails = () => {
+		setProductDetailsVisibilty(true)
 	};
 
 	const onQuantityChange = (
@@ -129,6 +134,14 @@ function App() {
 
 	return (
 		<div className="App">
+			<ProductDetails
+				visibilty={productDetailsVisibilty}
+				products={productsInCart}
+				onClose={() =>
+					setProductDetailsVisibilty(false)
+				}
+				
+			/>
 			<ShoppingCart
 				visibilty={cartsVisibilty}
 				products={productsInCart}
@@ -169,7 +182,6 @@ function App() {
 							key={product.id}>
 							<img
 								className="product-image"
-								
 								src={
 									ImgeHotel
 								}
@@ -194,7 +206,10 @@ function App() {
 								{product.price}$
 							</span>
 							<div className="buttons">
-								<button className="btn">
+								<button className="btn"
+									onClick={() =>
+										setProductDetailsVisibilty(true)
+									}>
 									Detail
 								</button>
 								<button
